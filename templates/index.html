@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiosk | High-End Magazine Stand</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- Premium Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="#" class="brand-logo">KIOSK.</a>
+            <nav class="nav-links">
+                {% for topic in catalog %}
+                <a href="#{{ topic.topic_slug }}">{{ topic.topic_name.split(' ')[0] }}</a>
+                {% endfor %}
+            </nav>
+            <div class="nav-actions">
+                <button class="subscribe-btn">Subscribe</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Welcome Editorial Hero Banner -->
+    <section class="hero-banner">
+        <div class="hero-content">
+            <span class="hero-tag">Curated Independent Press</span>
+            <h1>Read deeper. <br>Think broader.</h1>
+            <p>Explore specialized independent journals and masterfully crafted periodicals from creators worldwide.</p>
+        </div>
+    </section>
+
+    <!-- Dynamic Catalog Shelves -->
+    <main class="catalog-container">
+        {% for topic in catalog %}
+        <section id="{{ topic.topic_slug }}" class="topic-section">
+            
+            <div class="topic-header">
+                <h2>{{ topic.topic_name }}</h2>
+                <span class="count">{{ topic.magazines|length }} Issues Available</span>
+            </div>
+
+            <div class="magazine-grid">
+                {% for mag in topic.magazines %}
+                <article class="magazine-card">
+                    <div class="cover-wrapper">
+                        <img src="{{ mag.image }}" alt="{{ mag.title }} Cover">
+                        <div class="cover-overlay">
+                            <button class="preview-btn">Quick Preview</button>
+                        </div>
+                    </div>
+                    <div class="card-meta">
+                        <span class="issue-tag">{{ mag.issue }}</span>
+                        <h3 class="mag-title">{{ mag.title }}</h3>
+                        <p class="mag-excerpt">{{ mag.excerpt }}</p>
+                        <div class="creator-info">
+                            <span class="by">By</span>
+                            <span class="creator-name">{{ mag.creator }}</span>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+
+        </section>
+        {% endfor %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p class="footer-logo">KIOSK.</p>
+            <p class="footer-text">A modern digital newsstand built with Flask, HTML5, and CSS Grid.</p>
+            <p class="copyright">&copy; 2026 Kiosk Media Group. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
